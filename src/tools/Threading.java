@@ -19,10 +19,10 @@ public class Threading extends Thread {
         System.out.println("[Threading] " + "New " + this.getName() + " " + destPath);
         Download dow = new Download();
         dow.downloadFile(url, destPath);
-        Archive ar = new Archive();
+        /*Archive ar = new Archive();
         if (new File(destPath).exists()) {
             ar.unZip(destPath);
-        }
+        }*/
         System.out.println("[Threading] " + "Close " + this.getName() + " " + destPath);
     }
 }

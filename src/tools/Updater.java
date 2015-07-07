@@ -42,7 +42,7 @@ public class Updater{
             Object obj2 = parser.parse(version);
             result2 = parser(obj2, files);
             boolean check = false;
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < files.length; i++) {
                 if (result[i] != result2[i]) {
                     Threading th = new Threading(mainUrl + files[i], files[i]);
                     th.start();

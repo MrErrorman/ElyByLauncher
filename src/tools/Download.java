@@ -8,7 +8,7 @@ import java.net.*;
  * Created by John on 06.07.2015.
  */
 public class Download {
-    private static int BUFFER_SIZE = 64 * 1024;
+    private static int BUFFER_SIZE = 512;
 
     public static void downloadFile(String srcURL, String destPath) {
         InputStream in = null;
@@ -16,6 +16,8 @@ public class Download {
         try {
             HttpURLConnection conn = connection(srcURL);
             conn.connect();
+            conn.setConnectTimeout(10);
+            conn.setReadTimeout(10);
             System.out.println("[Download] " + "Downloading: " + destPath);
             in = conn.getInputStream();
             out = new FileOutputStream(destPath);
