@@ -1,9 +1,9 @@
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
+package Tools;
+
+
+import java.io.*;
+import java.net.*;
+
 
 /**
  * Created by John on 06.07.2015.
@@ -14,8 +14,9 @@ public class download {
         InputStream in = null;
         OutputStream out = null;
         try {
-            URLConnection conn = connection(srcURL);
+            HttpURLConnection conn = connection(srcURL);
             conn.connect();
+            System.out.println("Downloading: " + destPath);
             in = conn.getInputStream();
             out = new FileOutputStream(destPath);
             byte buffer[] = new byte[bufferSize];
@@ -27,6 +28,7 @@ public class download {
         } catch (IOException e) {
             System.out.println("File " + srcURL + " not found at server");
         } finally {
+            System.out.println("Downloaded:"+ destPath);
             try {
                 if (out != null) {
                     out.close();
@@ -48,8 +50,14 @@ public class download {
         return res;
     }
 
-    public static URLConnection connection(String srcURL) throws IOException {
+    public static HttpURLConnection connection(String srcURL) throws IOException {
         URL url = new URL(srcURL);
-        return url.openConnection();
+        URLConnection urlConnection = url.openConnection();
+
+        if (!(urlConnection instanceof HttpURLConnection))
+            throw new IOException("Invalid protocol: " + url.getProtocol());
+
+        HttpURLConnection connection = (HttpURLConnection) urlConnection;
+        return connection;
     }
 }

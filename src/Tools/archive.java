@@ -1,3 +1,5 @@
+package Tools;
+
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,13 +12,14 @@ import java.util.zip.ZipInputStream;
 
 public class archive {
 
-    private String destinationDirectory = "C:\\Users\\John\\AppData\\Roaming\\.minecraft\\";
-    private static final int BUFFER_SIZE = 1024;
+    public static void unZip(final String zipFileName) {
 
-    public void unZip(final String zipFileName) {
+        String destinationDirectory = "C:/Users/John/AppData/Roaming/.minecraft/";
+        int BUFFER_SIZE = 1024;
 
         byte[] buffer = new byte[BUFFER_SIZE];
 
+        // Создаем каталог, куда будут распакованы файлы
         final String dstDirectory = destinationDirectory;
         final File dstDir = new File(dstDirectory);
         if (!dstDir.exists()) {
@@ -24,6 +27,7 @@ public class archive {
         }
 
         try {
+            // Получаем содержимое ZIP архива
             final ZipInputStream zis = new ZipInputStream(
                     new FileInputStream(zipFileName));
             ZipEntry ze = zis.getNextEntry();
@@ -34,14 +38,19 @@ public class archive {
                         + nextFileName);
                 System.out.println("unzip file: "
                         + nextFile.getAbsolutePath());
+                // Если мы имеем дело с каталогом - надо его создать. Если
+                // этого не сделать, то не будут созданы пустые каталоги
+                // архива
                 if (ze.isDirectory()) {
                     nextFile.mkdir();
                 } else {
+                    // Создаем все родительские каталоги
                     new File(nextFile.getParent()).mkdirs();
+                    // Записываем содержимое файла
                     try (FileOutputStream fos
                                  = new FileOutputStream(nextFile)) {
                         int length;
-                        while((length = zis.read(buffer)) > 0) {
+                        while ((length = zis.read(buffer)) > 0) {
                             fos.write(buffer, 0, length);
                         }
                     }
