@@ -1,37 +1,82 @@
 package auth;
 
+import config.Config;
+
+import java.io.IOException;
+import java.net.*;
+
+
 /**
  * Created by dyakovri on 06.07.15.
  */
 public class Account {
-    private String username;
     private String password;
-    private String clientTocken = "jR2XknQCCCSkpagJ99xIGZiClzNqAn";
-    private String accessToken;
-    private String uuid;
-    private String name;
+    private Config config;
 
-    public final String defaultUrl= "https://authserver.mojang.com"; //"http://minecraft.ely.by";
-    public final String authenticateSub= "/authenticate"; //"/auth/authenticate";
-    public final String refreshSub= ""; //"/auth/refresh";
-
-    public void account(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public Account(Config config) {
+        this.config = config;
     }
 
     public void setUser(String username, String password) {
-        this.username = username;
+        config.setUsername(username);
         this.password = password;
     }
 
-    public String authPassword() {
-        String urlParameters =
-                "Username=" +  username +
-                "&Password=" + password +
-                "&ClientToken=" + clientTocken;
-        //TODO: use new Post
-        //String answer = auth.Networking.excutePost(defaultUrl + authenticateSub, urlParameters);
-        return null;
+    public String authenticate()
+            throws IOException
+    {
+        String urlParameters = "{ \"agent\": {\"name\": \"Minecraft\",\"version\": 1}," +
+                "\"username\": \"" + config.getUsername() +
+                "\",\"password\": \"" + password +
+                "\",\"clientToken\":\"" + config.getClientTocken() + "\"}";
+
+        String answer = "";
+        try {
+            URL url = new URL(config.getAuthenticateURIString());
+            answer = Networking.performPost(url, urlParameters, config.getProxy(), "application/json", true);
+        }
+        catch (MalformedURLException e) {
+            System.out.println(e.getMessage());
+        }
+        return answer;
     }
+
+    public String refresh()
+            throws IOException
+    {
+        String urlParameters = "{\"accessToken\": \"" + config.getAccessToken() +
+                "\",\"clientToken\": \"" + config.getClientTocken() +
+                "\"selectedProfile\": {\"id\": \"" + config.getUuidString() +
+                "\",\"name\": \"" + config.getName() + "\", \"legacy\":false}}";
+
+        String answer = "";
+        try {
+            URL url = new URL(config.getAuthenticateURIString());
+            answer = Networking.performPost(url, urlParameters, config.getProxy(), "application/json", true);
+        }
+        catch (MalformedURLException e) {
+            System.out.println(e.getMessage());
+        }
+        return answer;
+    }
+
+    public String validate()
+            throws IOException
+    {
+        String urlParameters = "{ \"accessToken\": \"" + config.getAccessToken() + "\",}";
+
+        String answer = "";
+        try {
+            URL url = new URL(config.getAuthenticateURIString());
+            answer = Networking.performPost(url, urlParameters, config.getProxy(), "application/json", true);
+        }
+        catch (MalformedURLException e) {
+            System.out.println(e.getMessage());
+        }
+        return answer;
+    }
+
+    public String signout() {return "";}
+    public String invalidate() {return "";}
+
 }

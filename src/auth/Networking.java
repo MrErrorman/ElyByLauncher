@@ -14,7 +14,7 @@ import java.nio.charset.Charset;
 /**
  * Created by dyakovri on 06.07.15.
  */
-public class Networking {
+class Networking {
     public static String performPost(URL url, String parameters, Proxy proxy, String contentType, boolean returnErrorPage)
             throws IOException
     {
