@@ -1,11 +1,10 @@
 *.class
-<<<<<<< HEAD
-=======
+
 *.jar
 *.json
 *.zip
+?est.*
 
->>>>>>> c59ac2fa9bc78c4bad85f6ee7ab470040d1e57ba
 hs_err_pid*
 
 /bin/
