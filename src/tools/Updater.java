@@ -12,20 +12,20 @@ import java.net.URLConnection;
 /**
  * Created by John on 07.07.2015.
  */
-public class Updater {
+public class Updater{
 
-    public static void updateClient(String mainUrl, String[] files) throws IOException, ParseException {
+  /* public static void updateClient(String mainUrl, String[] files) throws IOException, ParseException {
         checkUpdates(mainUrl, files);
         for (int i = 1; i < files.length; i++) {
             if (new File(files[i]).exists()) {
                 Archive.unZip(files[i]);
             }
         }
-    }
+    }*/
 
-    private static void checkUpdates(String mainUrl, String[] files) throws IOException, ParseException {
+    public static void checkUpdates(String mainUrl, String[] files) throws IOException, ParseException {
 
-        System.out.println("[Updater] "+"Start checking updates");
+        System.out.println("[Updater] " + "Start checking updates");
         URLConnection conn = tools.Download.connection(mainUrl + files[0]);
         conn.connect();
         String version = tools.Download.readHeader(conn.getInputStream());
@@ -44,7 +44,8 @@ public class Updater {
             boolean check = false;
             for (int i = 0; i < 6; i++) {
                 if (result[i] != result2[i]) {
-                    tools.Download.downloadFile(mainUrl + files[i], files[i]);
+                    Threading th = new Threading(mainUrl + files[i], files[i]);
+                    th.start();
                     check = true;
                 }
             }
@@ -52,9 +53,9 @@ public class Updater {
                 tools.Download.downloadFile(mainUrl + files[0], files[0]);
             }
         } else {
-            System.out.println("[Updater/Error] "+"No connection on the server");
+            System.out.println("[Updater/Error] " + "No connection on the server");
         }
-        System.out.println("[Updater] "+"Finish checking updates");
+        System.out.println("[Updater] " + "Finish checking updates");
     }
 
     public static double[] parser(Object obj, String[] files) {

@@ -15,6 +15,7 @@ public class Main {
 
         String config = "Hello World";
         System.out.println(config);
-        Updater.updateClient(mainUrl, files);
+        Updater.checkUpdates(mainUrl, files);
+        System.out.println("Main off");
     }
 }
