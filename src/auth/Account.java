@@ -1,4 +1,4 @@
-package Auth;
+package auth;
 
 /**
  * Created by dyakovri on 06.07.15.
@@ -30,7 +30,8 @@ public class Account {
                 "Username=" +  username +
                 "&Password=" + password +
                 "&ClientToken=" + clientTocken;
-        String answer = Auth.Networking.excutePost(defaultUrl + authenticateSub, urlParameters);
-        return answer;
+        //TODO: use new Post
+        //String answer = auth.Networking.excutePost(defaultUrl + authenticateSub, urlParameters);
+        return null;
     }
 }

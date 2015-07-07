@@ -15,17 +15,16 @@ public class Archive {
     public static void unZip(final String zipFileName) {
 
         String destinationDirectory = "";
-        if(OSValidator.checkOS()==1) {
+        if(tools.OSValidator.checkOS()==1) {
             destinationDirectory = System.getenv("APPDATA") + "/.minecraft/";
         }
-        if(OSValidator.checkOS()==3) {
+        if(tools.OSValidator.checkOS()==3) {
             destinationDirectory = System.getProperty("user.home") + "/.minecraft/"; //for unix
         }
         int BUFFER_SIZE = 1024;
 
         byte[] buffer = new byte[BUFFER_SIZE];
 
-        // Создаем каталог, куда будут распакованы файлы
         final String dstDirectory = destinationDirectory;
         final File dstDir = new File(dstDirectory);
         if (!dstDir.exists()) {
@@ -33,7 +32,6 @@ public class Archive {
         }
         if (new File(zipFileName).exists()) {
             try {
-                // Получаем содержимое ZIP архива
                 final ZipInputStream zis = new ZipInputStream(
                         new FileInputStream(zipFileName));
                 ZipEntry ze = zis.getNextEntry();
@@ -44,15 +42,11 @@ public class Archive {
                             + nextFileName);
                     System.out.println("unzip file: "
                             + nextFile.getAbsolutePath());
-                    // Если мы имеем дело с каталогом - надо его создать. Если
-                    // этого не сделать, то не будут созданы пустые каталоги
-                    // архива
+
                     if (ze.isDirectory()) {
                         nextFile.mkdir();
                     } else {
-                        // Создаем все родительские каталоги
                         new File(nextFile.getParent()).mkdirs();
-                        // Записываем содержимое файла
                         try (FileOutputStream fos
                                      = new FileOutputStream(nextFile)) {
                             int length;

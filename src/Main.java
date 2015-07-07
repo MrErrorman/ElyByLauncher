@@ -1,5 +1,5 @@
-import Tools.*;
-import Auth.*;
+import tools.*;
+import auth.*;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
