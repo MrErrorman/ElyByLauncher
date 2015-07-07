@@ -15,5 +15,6 @@ public class Main {
 
         String config = "Hello World";
         System.out.println(config);
+        Updater.updateClient(mainUrl, files);
     }
 }
