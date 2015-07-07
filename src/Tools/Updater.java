@@ -18,9 +18,9 @@ public class Updater {
         System.out.println("Start checking updates");
         int BUFFER_SIZE = 64 * 1023;
 
-        URLConnection conn = Download.connection(mainUrl + files[0]);
+        URLConnection conn = tools.Download.connection(mainUrl + files[0]);
         conn.connect();
-        String version = Download.readHeader(conn.getInputStream());
+        String version = tools.Download.readHeader(conn.getInputStream());
         if (version.substring(5, 14).equals("gamefiles")) {
             JSONParser parser = new JSONParser();
             double[] result;
@@ -36,12 +36,12 @@ public class Updater {
             boolean check = false;
             for (int i = 0; i < 6; i++) {
                 if (result[i] != result2[i]) {
-                    Download.downloadFile(mainUrl + files[i], files[i], BUFFER_SIZE);
+                    tools.Download.downloadFile(mainUrl + files[i], files[i], BUFFER_SIZE);
                     check = true;
                 }
             }
             if (check) {
-                Download.downloadFile(mainUrl + files[0], files[0], BUFFER_SIZE);
+                tools.Download.downloadFile(mainUrl + files[0], files[0], BUFFER_SIZE);
             }
         } else {
             System.out.println("Error checking versions");

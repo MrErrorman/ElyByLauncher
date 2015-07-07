@@ -1,4 +1,4 @@
-package auth;
+package Auth;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
