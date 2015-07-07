@@ -15,13 +15,13 @@ public class Config {
     private static File mcDirectory;
     private static File launcherConfig;
     private static URI downloadRoot = URI.create("http://files.dmine.esy.es");
-    private static URI authRoot = URI.create(/*"https://authserver.mojang.com/");  //*/"http://minecraft.ely.by");
-    private static String authenticateSubauth = /*"/authenticate";    //*/ "/auth/authenticate";
+    private static URI authRoot = URI.create("http://minecraft.ely.by");
+    private static String authenticateSubauth = "/auth/authenticate";
     private static String refreshSubauth = "/auth/refresh";
     private static String validateSubauth = "/auth/validate";
     private static String signoutSubauth = "/auth/signout";
     private static String invalidateSubauth = "/auth/invalidate";
-    private static Proxy proxy = Proxy.NO_PROXY; //new Proxy(Proxy.Type.DIRECT, new InetSocketAddress("minecraft.ely.by", 80));
+    private static Proxy proxy = Proxy.NO_PROXY;
     private static String[] downloadFiles = {"versions.json", "config.zip", "core.zip", "libraries.zip", "mods.zip", "tlauncher.zip"};
     private static int OS = 0;
     private static String clientTocken = "jR2XknQCCCSkpagJ99xIGZiClzNqAn";
@@ -31,25 +31,7 @@ public class Config {
     private static String name;
 
     static {
-        String userHome = System.getProperty("user.home", ".");
-        OS = tools.OSValidator.checkOS();
-        switch (OS)
-        {
-            case 3:
-            case 4:
-                mcDirectory = new File(userHome, ".minecraft/");
-                break;
-            case 1:
-                String applicationData = System.getenv("APPDATA");
-                String folder = applicationData != null ? applicationData : userHome;
-                mcDirectory = new File(folder, ".minecraft/");
-                break;
-            case 2:
-                mcDirectory = new File(userHome, "Library/Application Support/minecraft");
-                break;
-            default:
-                mcDirectory = new File(userHome, "minecraft/");
-        }
+        mcDirectory = OSValidator.getWorkingDirectory();
         launcherConfig = new File(mcDirectory.getPath(), "lconfig.json");
     }
 
