@@ -1,5 +1,8 @@
 *.class
 *.jar
+*.json
+*.zip
+
 hs_err_pid*
 
 /bin/
