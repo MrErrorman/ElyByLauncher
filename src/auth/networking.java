@@ -10,7 +10,7 @@ import java.net.URL;
 /**
  * Created by dyakovri on 06.07.15.
  */
-public class networking {
+public class Networking {
     public static String excutePost(String targetURL, String urlParameters)
     {
         URL url;

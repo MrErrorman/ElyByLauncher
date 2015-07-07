@@ -1,4 +1,4 @@
-package Tools;
+package tools;
 
 
 import java.io.*;
@@ -8,7 +8,7 @@ import java.net.*;
 /**
  * Created by John on 06.07.2015.
  */
-public class download {
+public class Download {
 
     public static void downloadFile(String srcURL, String destPath, int bufferSize) {
         InputStream in = null;

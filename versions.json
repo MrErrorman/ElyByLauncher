@@ -1,0 +1,10 @@
+{
+  "gamefiles": {
+    "config.zip":1.0,
+    "core.zip":1.0,
+    "libraries.zip":1.0,
+    "mods.zip":1.0,
+    "tlauncher.zip":1.55
+  },
+  "versions.json":1.0
+}
