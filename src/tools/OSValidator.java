@@ -12,7 +12,7 @@ public class OSValidator {
         WINDOWS,  MACOS,  SOLARIS,  LINUX,  UNKNOWN;
     }
 
-    private static OS getPlatform()
+    public static OS getPlatform()
     {
         String osName = System.getProperty("os.name").toLowerCase();
         if (osName.contains("win")) {

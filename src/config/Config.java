@@ -11,7 +11,48 @@ import java.util.UUID;
  * Created by dyakovri on 07.07.15.
  */
 
-public class Config {
+interface ConfigUser {
+    public boolean setUsername(String username);
+    public boolean setClientTocken(String clientTocken);
+    public boolean setAccessToken(String accessToken);
+    public boolean setName(String name);
+    public boolean setUuid(UUID uuid);
+
+    public String getClientTocken();
+    public String getUsername();
+    public String getAccessToken();
+    public String getName();
+    public String getUuidString();
+    public UUID getUuid();
+
+    public URI getAuthURI();
+    public URI getDownloadURI();
+    public URI getAuthenticateURI();
+    public URI getRefreshURI();
+    public URI getValidateURI();
+    public URI getSignoutURI();
+    public URI getInvalidateURI();
+
+    public String getAuthURIString();
+    public String getDownloadURIString();
+    public String getAuthenticateURIString();
+    public String getRefreshURIString();
+    public String getValidateURIString();
+    public String getSignoutURIString();
+    public String getInvalidateURIString();
+}
+
+interface ConfigSystem {
+    public File getMcDirectory();
+    public File getLauncherConfig();
+    public String getMcDirectoryPath();
+    public String getLauncherConfigPath();
+    public OSValidator.OS getOS();
+    public Proxy getProxy();
+    public boolean setProxy(Proxy proxy);
+}
+
+public class Config implements ConfigUser,ConfigSystem {
     private static File mcDirectory;
     private static File launcherConfig;
     private static URI downloadRoot = URI.create("http://files.dmine.esy.es");
@@ -23,7 +64,7 @@ public class Config {
     private static String invalidateSubauth = "/auth/invalidate";
     private static Proxy proxy = Proxy.NO_PROXY;
     private static String[] downloadFiles = {"versions.json", "config.zip", "core.zip", "libraries.zip", "mods.zip", "tlauncher.zip"};
-    private static int OS = 0;
+    private static OSValidator.OS OS = OSValidator.OS.UNKNOWN;
     private static String clientTocken = "jR2XknQCCCSkpagJ99xIGZiClzNqAn";
     private static String username;
     private static String accessToken;
@@ -31,13 +72,14 @@ public class Config {
     private static String name;
 
     static {
+        OS = OSValidator.getPlatform();
         mcDirectory = OSValidator.getWorkingDirectory();
         launcherConfig = new File(mcDirectory.getPath(), "lconfig.json");
     }
 
     public static void Main(boolean a) {}
 
-    public int getOS() { return OS; }
+    public OSValidator.OS getOS() { return OS; }
 
     public File getMcDirectory() { return mcDirectory; }
     public File getLauncherConfig() { return launcherConfig; }

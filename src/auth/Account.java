@@ -1,7 +1,6 @@
 package auth;
 
 import config.Config;
-
 import java.io.IOException;
 import java.net.*;
 
@@ -25,6 +24,7 @@ public class Account {
     public String authenticate()
             throws IOException
     {
+
         String urlParameters = "{ \"agent\": {\"name\": \"Minecraft\",\"version\": 1}," +
                 "\"username\": \"" + config.getUsername() +
                 "\",\"password\": \"" + password +
