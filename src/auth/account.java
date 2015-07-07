@@ -13,9 +13,9 @@ public class account {
     private String uuid;
     private String name;
 
-    public final String defaultUrl= "http://minecraft.ely.by";
-    public final String authenticateSub= "/auth/authenticate";
-    public final String refreshSub= "/auth/refresh";
+    public final String defaultUrl= "https://authserver.mojang.com"; //"http://minecraft.ely.by";
+    public final String authenticateSub= "/authenticate"; //"/auth/authenticate";
+    public final String refreshSub= ""; //"/auth/refresh";
 
     public void account(String username, String password) {
         this.username = username;
@@ -29,7 +29,7 @@ public class account {
 
     public String authPassword() {
         String urlParameters =
-                "Username=" + username +
+                "Username=" +  username +
                 "&Password=" + password +
                 "&ClientToken=" + clientTocken;
         String answer = networking.excutePost(defaultUrl + authenticateSub,urlParameters);

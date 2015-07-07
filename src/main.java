@@ -16,16 +16,18 @@ public class main {
     public static void main(String[] args) throws IOException, ParseException {
         String mainUrl = "http://files.dmine.esy.es/";
         String[] files = {"versions.json", "config.zip", "core.zip", "libraries.zip", "mods.zip", "tlauncher.zip"};
-        checkUpdates(mainUrl, files);
-        archive zip = new archive();
-        zip.unZip(files[1]);
 
+
+        //mrerro's files testing
+        //checkUpdates(mainUrl, files);
+        //archive zip = new archive();
+        //zip.unZip(files[1]);
+
+        //MrEM's auth testing
         String config = "";
-
-        //account account = new account();
-        //account.setUser("login","password");
-        //config = account.authPassword();
-
+        account account = new account();
+        account.setUser("login","password");
+        config = account.authPassword();
         System.out.println(config);
 
     }

@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 
 /**
  * Created by dyakovri on 06.07.15.
@@ -38,6 +39,7 @@ public class networking {
             //Get Response
             InputStream is = connection.getInputStream();
             BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+            //BufferedReader rd = new BufferedReader(new InputStreamReader(((HttpURLConnection) (new URL(targetURL)).openConnection()).getInputStream(), Charset.forName("UTF-8")));
             String line;
             StringBuffer response = new StringBuffer();
             while((line = rd.readLine()) != null) {
