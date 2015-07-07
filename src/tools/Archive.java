@@ -14,19 +14,10 @@ public class Archive {
 
     public static void unZip(final String zipFileName) {
 
-        String destinationDirectory = "";
-        if(tools.OSValidator.checkOS()==1) {
-            destinationDirectory = System.getenv("APPDATA") + "/.minecraft/";
-        }
-        if(tools.OSValidator.checkOS()==3) {
-            destinationDirectory = System.getProperty("user.home") + "/.minecraft/"; //for unix
-        }
         int BUFFER_SIZE = 1024;
-
         byte[] buffer = new byte[BUFFER_SIZE];
 
-        final String dstDirectory = destinationDirectory;
-        final File dstDir = new File(dstDirectory);
+        final File dstDir = OSValidator.getWorkingDirectory();
         if (!dstDir.exists()) {
             dstDir.mkdir();
         }
@@ -38,7 +29,7 @@ public class Archive {
                 String nextFileName;
                 while (ze != null) {
                     nextFileName = ze.getName();
-                    File nextFile = new File(dstDirectory + File.separator
+                    File nextFile = new File(dstDir + File.separator
                             + nextFileName);
                     System.out.println("unzip file: "
                             + nextFile.getAbsolutePath());

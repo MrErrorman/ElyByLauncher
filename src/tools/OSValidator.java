@@ -1,50 +1,57 @@
 package tools;
 
+import java.io.File;
+
 /**
  * Created by John on 07.07.2015.
  */
 public class OSValidator {
 
-    public static int checkOS() {
+    public enum OS
+    {
+        WINDOWS,  MACOS,  SOLARIS,  LINUX,  UNKNOWN;
+    }
 
-        String OS = System.getProperty("os.name").toLowerCase();
-        System.out.println(OS);
-
-        if (isWindows(OS )) {
-            return 1;
-        } else if (isMac(OS )) {
-            return 2;
-        } else if (isUnix(OS )) {
-            return 3;
-        } else if (isSolaris(OS )) {
-            return 4;
-        } else {
-            System.out.println("Your OS is not support!!");
+    private static OS getPlatform()
+    {
+        String osName = System.getProperty("os.name").toLowerCase();
+        if (osName.contains("win")) {
+            return OS.WINDOWS;
         }
-        return 0;
+        if (osName.contains("mac")) {
+            return OS.MACOS;
+        }
+        if (osName.contains("linux")) {
+            return OS.LINUX;
+        }
+        if (osName.contains("unix")) {
+            return OS.LINUX;
+        }
+        return OS.UNKNOWN;
     }
 
-    private static boolean isWindows(String OS) {
+    public static File getWorkingDirectory()
+    {
+        String userHome = System.getProperty("user.home", ".");
+        File workingDirectory;
+        switch (getPlatform())
+        {
+            case LINUX:
+            case SOLARIS:
+                workingDirectory = new File(userHome, ".minecraft/");
+                break;
+            case WINDOWS:
+                String applicationData = System.getenv("APPDATA");
+                String folder = applicationData != null ? applicationData : userHome;
 
-        return (OS.indexOf("win") >= 0);
-
-    }
-
-    private static boolean isMac(String OS) {
-
-        return (OS.indexOf("mac") >= 0);
-
-    }
-
-    private static boolean isUnix(String OS) {
-
-        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0 );
-
-    }
-
-    private static boolean isSolaris(String OS) {
-
-        return (OS.indexOf("sunos") >= 0);
-
+                workingDirectory = new File(folder, ".minecraft/");
+                break;
+            case MACOS:
+                workingDirectory = new File(userHome, "Library/Application Support/minecraft");
+                break;
+            default:
+                workingDirectory = new File(userHome, "minecraft/");
+        }
+        return workingDirectory;
     }
 }
