@@ -22,9 +22,9 @@ public class main {
 
         String config = "";
 
-        account account = new account();
-        account.setUser("login","password");
-        config = account.authPassword();
+        //account account = new account();
+        //account.setUser("login","password");
+        //config = account.authPassword();
 
         System.out.println(config);
 
