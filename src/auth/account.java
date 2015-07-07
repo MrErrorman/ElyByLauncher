@@ -1,11 +1,9 @@
 package auth;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
-
 /**
  * Created by dyakovri on 06.07.15.
  */
-public class account {
+public class Account {
     private String username;
     private String password;
     private String clientTocken = "jR2XknQCCCSkpagJ99xIGZiClzNqAn";
@@ -32,7 +30,7 @@ public class account {
                 "Username=" +  username +
                 "&Password=" + password +
                 "&ClientToken=" + clientTocken;
-        String answer = networking.excutePost(defaultUrl + authenticateSub,urlParameters);
+        String answer = Networking.excutePost(defaultUrl + authenticateSub, urlParameters);
         return answer;
     }
 }
