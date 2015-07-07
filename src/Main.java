@@ -10,7 +10,6 @@ public class Main {
     public static void main(String[] args) throws IOException {
         String mainUrl = config.getDownloadURIString();
         String[] files = config.getDownloadFiles();
-
         Test test = new Test(config);
 
         /*
