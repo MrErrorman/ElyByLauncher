@@ -59,11 +59,11 @@ public class Updater {
             }
             if (check) {
                 Download.downloadFile(new URL(mainUrl + files[0]), files[0], serverVersions[0], 0);
-                Runtime.getRuntime().exec("cmd /c start " + path + "/remove_download2.bat");
+                Runtime.getRuntime().exec("cmd /c start " + path + "/remove_download.bat");
             }
             if (checkClientUpdate) {
                 System.out.println("[Updater] " + "Start update client");
-                //Runtime.getRuntime().exec("cmd /c start " + path + "\\update_client.bat");
+                Runtime.getRuntime().exec("cmd /c start " + path + "/update_client.bat");
                 System.exit(0);
             }
         } else {
