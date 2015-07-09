@@ -53,25 +53,25 @@ interface ConfigSystem {
 }
 
 public class Config implements ConfigUser,ConfigSystem {
-    private static File mcDirectory;
-    private static File launcherConfig;
-    private static URI downloadRoot = URI.create("http://files.dmine.esy.es");
-    private static URI authRoot = URI.create("http://minecraft.ely.by");
-    private static String authenticateSubauth = "/auth/authenticate";
-    private static String refreshSubauth = "/auth/refresh";
-    private static String validateSubauth = "/auth/validate";
-    private static String signoutSubauth = "/auth/signout";
-    private static String invalidateSubauth = "/auth/invalidate";
-    private static Proxy proxy = Proxy.NO_PROXY;
-    private static String[] downloadFiles = {"versions.json", "config.zip", "core.zip", "libraries.zip", "mods.zip", "tlauncher.zip"};
-    private static OSValidator.OS OS = OSValidator.OS.UNKNOWN;
-    private static String clientTocken = "jR2XknQCCCSkpagJ99xIGZiClzNqAn";
-    private static String username;
-    private static String accessToken;
-    private static UUID uuid;
-    private static String name;
+    private File mcDirectory;
+    private File launcherConfig;
+    private URI downloadRoot = URI.create("http://files.dmine.esy.es");
+    private URI authRoot = URI.create("http://minecraft.ely.by");
+    private String authenticateSubauth = "/auth/authenticate";
+    private String refreshSubauth = "/auth/refresh";
+    private String validateSubauth = "/auth/validate";
+    private String signoutSubauth = "/auth/signout";
+    private String invalidateSubauth = "/auth/invalidate";
+    private Proxy proxy = Proxy.NO_PROXY;
+    private String[] downloadFiles = {"versions.json", "config.zip", "core.zip", "libraries.zip", "mods.zip", "tlauncher.zip"};
+    private OSValidator.OS OS = OSValidator.OS.UNKNOWN;
+    private String clientTocken = "jR2XknQCCCSkpagJ99xIGZiClzNqAn";
+    private String username;
+    private String accessToken;
+    private UUID uuid;
+    private String name;
 
-    static {
+    public Config() {
         OS = OSValidator.getPlatform();
         mcDirectory = OSValidator.getWorkingDirectory();
         launcherConfig = new File(mcDirectory.getPath(), "lconfig.json");
