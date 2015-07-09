@@ -1,5 +1,7 @@
 import config.Config;
 import auth.Account;
+import org.json.simple.parser.ParseException;
+import tools.Updater;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -54,7 +56,8 @@ public class StateManager {
 
 
 
-    public StateManager(Config config, int StateCode ) throws IOException {
+    public StateManager(Config config, int StateCode )
+            throws IOException, ParseException, InterruptedException {
         this.config = config;
         State state = new State(StateCode);
         String command = "";
@@ -84,13 +87,14 @@ public class StateManager {
             for (int i = 1;i<=args.length;i++) {
                 args[i-1]=s[i];
             }
+            if (args.length == 0) { args = new String[1]; }
 
             state.ChangeState(Commander(command.toString(), args));
         }
     }
 
     public State Commander(String command, String[] args)
-            throws IOException {
+            throws IOException, ParseException, InterruptedException {
         switch (command)
         {
             case "q":
@@ -136,9 +140,7 @@ public class StateManager {
                 if ((args[0] == "-f") || (args[0] == "--force")) {
 
                 }
-                else {
-                    //Updater.checkUpdates();
-                }
+                Updater.checkUpdates(config);
                 return new State(1);
 
 
