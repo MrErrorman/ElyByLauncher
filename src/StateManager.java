@@ -148,7 +148,7 @@ public class StateManager {
                 /*
                  * Command to launch minecraft
                  */
-                
+
                 return new State(2);
             default:
                 System.out.println("Invalid command");

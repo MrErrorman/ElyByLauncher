@@ -15,13 +15,13 @@ public class Main {
          * Now it works!
          *
          * You must know that it is a infinity cycle
-         * If you want to launch tems mode (test.java) use StateCode = -1
+         * If you want to launch tems mode (test.java) use StateCode = -1 or "test" ("debug") launch argument
          *
          * State = 0 - exiting
          * State = 1 - waiting for a command
          * We can add a new state in StateManager.java!
          */
-        if (args[0] == "test") {
+        if ((args[0] == "test") || (args[0] == "debug")) {
             new StateManager(config, -1);
         }
         if (args[0] == "nogui") {
