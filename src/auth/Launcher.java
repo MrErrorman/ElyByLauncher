@@ -15,6 +15,6 @@ public class Launcher  {
 
     public Launcher(Config config) {
         processBuilder = new ProcessBuilder("");
-        process = processBuilder.start();
+        //process = processBuilder.start();
     }
 }

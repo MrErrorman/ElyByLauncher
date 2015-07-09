@@ -1,17 +1,23 @@
 import config.Config;
+import config.ConfigReader;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
+import java.io.*;
+import java.security.MessageDigest;
 
 /**
  * Created by John on 06.07.2015.
  */
 public class Main {
     public static config.Config config = new Config();
-    public static void main(String[] args) throws IOException, ParseException, InterruptedException {
+
+    public static void main(String[] args) throws IOException, ParseException, InterruptedException, Exception {
+        System.out.println("Starting a launcher");
+        config.cr = new ConfigReader(config);
+
         /*
-         * Now it works!
-         *
          * You must know that it is a infinity cycle
          * If you want to launch tems mode (test.java) use StateCode = -1 or "test" ("debug") launch argument
          *
@@ -19,9 +25,7 @@ public class Main {
          * State = 1 - waiting for a command
          * We can add a new state in StateManager.java!
          */
-        if (args.length == 0) { args = new String[1]; }
-
-        if ((args[0] == "test") || (args[0] == "debug")) {
+        if ( (args.length > 0) && ((args[0].toString() == "test") || (args[0].toString() == "debug"))) {
             new StateManager(config, -1);
         }
         if (args[0] == "nogui") {
@@ -29,7 +33,7 @@ public class Main {
             new StateManager(config, 1);
         }
         else {
-            new StateManager(config, 1);
+            new StateManager(config, config.getLaunchStateNum());
         }
     }
 }

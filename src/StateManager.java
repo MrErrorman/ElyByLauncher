@@ -1,9 +1,12 @@
+import auth.Launcher;
 import config.Config;
 import auth.Account;
+import config.ConfigMaker;
 import org.json.simple.parser.ParseException;
 import tools.Updater;
 
 import java.io.IOException;
+import java.net.Authenticator;
 import java.util.Scanner;
 
 /**
@@ -57,7 +60,7 @@ public class StateManager {
 
 
     public StateManager(Config config, int StateCode )
-            throws IOException, ParseException, InterruptedException {
+            throws IOException, ParseException, InterruptedException, Exception {
         this.config = config;
         State state = new State(StateCode);
         String command = "";
@@ -87,14 +90,13 @@ public class StateManager {
             for (int i = 1;i<=args.length;i++) {
                 args[i-1]=s[i];
             }
-            if (args.length == 0) { args = new String[1]; }
 
             state.ChangeState(Commander(command.toString(), args));
         }
     }
 
     public State Commander(String command, String[] args)
-            throws IOException, ParseException, InterruptedException {
+            throws IOException, ParseException, InterruptedException, Exception {
         switch (command)
         {
             case "q":
@@ -102,10 +104,11 @@ public class StateManager {
                 /*
                  * Command for quiting
                  */
+                System.out.println("Saving changes...");
+                ConfigMaker cm = new ConfigMaker(config);
+                cm.saveConfig();
                 System.out.println("Exiting...");
                 return new State(0);
-
-
             case "login":
             case "l":
             case "user":
@@ -113,17 +116,17 @@ public class StateManager {
                 /*
                  * Command for logging in
                  */
-                Account acc = new Account(config);
+                Account accu = new Account(config);
                 if (args.length == 2) {
-                    acc.setUser(args[0], args[1]);
-                    System.out.println(acc.authenticate());
+                    accu.setUser(args[0], args[1]);
+                    accu.authenticate();
                 }
                 else if (args.length == 0) {
                     System.out.print("login:");
                     String username =  in.nextLine();
                     System.out.print("password:");
-                    acc.setUser(username, in.nextLine());
-                    System.out.println(acc.authenticate());
+                    accu.setUser(username, in.nextLine());
+                    accu.authenticate();
                 }
                 else { System.out.println("Invalid number of arguments \n Use \"" + command + "\" or \"" + command + " <login> <password>\""); }
                 return new State(1);
@@ -137,7 +140,7 @@ public class StateManager {
                  * Command for downloading updates
                  * TODO: download minecraft without version checking with "-f" argument
                  */
-                if ((args[0] == "-f") || (args[0] == "--force")) {
+                if ((args.length>0) && ((args[0] == "-f") || (args[0] == "--force"))) {
 
                 }
                 Updater.checkUpdates(config);
@@ -150,7 +153,8 @@ public class StateManager {
                 /*
                  * Command to launch minecraft
                  */
-
+                Account accl = new Account(config);
+                if ((config.getUsername() != "") && (accl.validate())) new Launcher(config);
                 return new State(2);
             default:
                 System.out.println("Invalid command");

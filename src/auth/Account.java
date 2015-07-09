@@ -3,6 +3,7 @@ package auth;
 import config.Config;
 import java.io.IOException;
 import java.net.*;
+import java.text.ParseException;
 
 
 /**
@@ -22,7 +23,7 @@ public class Account {
     }
 
     public String authenticate()
-            throws IOException
+            throws IOException, org.json.simple.parser.ParseException
     {
 
         String urlParameters = "{ \"agent\": {\"name\": \"Minecraft\",\"version\": 1}," +
@@ -38,42 +39,46 @@ public class Account {
         catch (MalformedURLException e) {
             System.out.println(e.getMessage());
         }
-        return answer;
+
+        config.cr.responseReader(config,answer);
+        return null;
     }
 
     public String refresh()
-            throws IOException
+            throws IOException, org.json.simple.parser.ParseException
     {
         String urlParameters = "{\"accessToken\": \"" + config.getAccessToken() +
-                "\",\"clientToken\": \"" + config.getClientTocken() +
-                "\"selectedProfile\": {\"id\": \"" + config.getUuidString() +
+                "\",\"clientToken\": \"" + config.getClientTocken() + "\"," +
+                "\"selectedProfile\": {\"id\":\"" + config.getUuidString() +
                 "\",\"name\": \"" + config.getName() + "\", \"legacy\":false}}";
 
         String answer = "";
         try {
-            URL url = new URL(config.getAuthenticateURIString());
+            URL url = new URL(config.getRefreshURIString());
             answer = Networking.performPost(url, urlParameters, config.getProxy(), "application/json", true);
         }
         catch (MalformedURLException e) {
             System.out.println(e.getMessage());
         }
-        return answer;
+        config.cr.responseReader(config,answer);
+        return null;
     }
 
-    public String validate()
-            throws IOException
+    public boolean validate()
+            throws IOException, org.json.simple.parser.ParseException
     {
-        String urlParameters = "{ \"accessToken\": \"" + config.getAccessToken() + "\",}";
+        String urlParameters = "{ \"accessToken\": \"" + config.getAccessToken() + "\"}";
 
         String answer = "";
         try {
-            URL url = new URL(config.getAuthenticateURIString());
+            URL url = new URL(config.getValidateURIString());
             answer = Networking.performPost(url, urlParameters, config.getProxy(), "application/json", true);
         }
         catch (MalformedURLException e) {
             System.out.println(e.getMessage());
         }
-        return answer;
+
+        return  config.cr.validateReader(answer);
     }
 
     public String signout() {return "";}
