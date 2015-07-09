@@ -19,6 +19,8 @@ public class Main {
          * State = 1 - waiting for a command
          * We can add a new state in StateManager.java!
          */
+        if (args.length == 0) { args = new String[1]; }
+
         if ((args[0] == "test") || (args[0] == "debug")) {
             new StateManager(config, -1);
         }
