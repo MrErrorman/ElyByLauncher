@@ -12,58 +12,7 @@ import java.util.*;
  * Created by dyakovri on 07.07.15.
  */
 
-interface ConfigUser {
-    public boolean setUsername(String username);
-    public boolean setClientTocken(String clientTocken);
-    public boolean setAccessToken(String accessToken);
-    public boolean setName(String name);
-    public boolean setUuid(String uuid);
-
-    public String getClientTocken();
-    public String getUsername();
-    public String getAccessToken();
-    public String getName();
-    public String getUuidString();
-    public String getUuid();
-
-    public URI getAuthURI();
-    public URI getDownloadURI();
-    public URI getAuthenticateURI();
-    public URI getRefreshURI();
-    public URI getValidateURI();
-    public URI getSignoutURI();
-    public URI getInvalidateURI();
-
-    public String getAuthURIString();
-    public String getDownloadURIString();
-    public String getAuthenticateURIString();
-    public String getRefreshURIString();
-    public String getValidateURIString();
-    public String getSignoutURIString();
-    public String getInvalidateURIString();
-}
-
-interface ConfigSystem {
-    public File getMcDirectory();
-    public String getMcLaunchSubdirectory();
-    public File getLauncherConfig();
-    public String getMcDirectoryPath();
-    public String getLauncherConfigPath();
-
-    public OSValidator.OS getOS();
-
-    public Proxy getProxy();
-    public boolean setProxy(Proxy proxy);
-
-    public String getJavaArguments();
-    public boolean setJavaArguments(String javaArguments);
-
-    public File getJava();
-    public String getJavaPath();
-    public boolean setJavaPath(String javaPath);
-}
-
-public class Config implements ConfigUser,ConfigSystem {
+public class Config {
     public class Property {
         public Object value;
         public String name;
@@ -83,7 +32,7 @@ public class Config implements ConfigUser,ConfigSystem {
     }
 
     private File mcDirectory;
-    private String mcLaunchSubdirectory = "/versions/ForgeLiteLoader 1.7.10";
+    private String mcVersion = "ForgeLiteLoader 1.7.10";
     private File launcherConfig;
     private URI downloadRoot = URI.create("http://files.dmine.esy.es/");
     private URI authRoot = URI.create("http://minecraft.ely.by");
@@ -114,7 +63,7 @@ public class Config implements ConfigUser,ConfigSystem {
             new Property("javaPath", java),
             new Property("javaArgument", javaArguments),
             new Property("minecraftArguments", minecraftArguments),
-            new Property("mcLaunchSubdirectory", mcLaunchSubdirectory, false),
+            new Property("mcVersion", mcVersion, false),
             new Property("downloadFiles", downloadFiles, false),
             new Property("clientTocken", clientTocken, false)
     };
@@ -149,8 +98,8 @@ public class Config implements ConfigUser,ConfigSystem {
         return launcherConfig.getPath();
     }
 
-    public String getMcLaunchSubdirectory() {
-        return mcLaunchSubdirectory;
+    public String getMcVersion() {
+        return mcVersion;
     }
 
     public URI getAuthURI() {
@@ -315,7 +264,7 @@ public class Config implements ConfigUser,ConfigSystem {
         properties[5] = new Property("javaPath", java);
         properties[6] = new Property("javaArgument", javaArguments);
         properties[7] = new Property("minecraftArguments", minecraftArguments);
-        properties[8] = new Property("mcLaunchSubdirectory", mcLaunchSubdirectory, false);
+        properties[8] = new Property("Version", mcVersion, false);
         properties[9] = new Property("downloadFiles", downloadFiles, false);
         properties[10] = new Property("clientTocken", clientTocken, false);
     }
