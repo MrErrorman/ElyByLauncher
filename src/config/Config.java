@@ -55,7 +55,7 @@ interface ConfigSystem {
 public class Config implements ConfigUser,ConfigSystem {
     private File mcDirectory;
     private File launcherConfig;
-    private URI downloadRoot = URI.create("http://files.dmine.esy.es");
+    private URI downloadRoot = URI.create("http://files.dmine.esy.es/");
     private URI authRoot = URI.create("http://minecraft.ely.by");
     private String authenticateSubauth = "/auth/authenticate";
     private String refreshSubauth = "/auth/refresh";
