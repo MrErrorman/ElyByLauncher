@@ -44,16 +44,27 @@ interface ConfigUser {
 
 interface ConfigSystem {
     public File getMcDirectory();
+    public String getMcLaunchSubdirectory();
     public File getLauncherConfig();
     public String getMcDirectoryPath();
     public String getLauncherConfigPath();
+
     public OSValidator.OS getOS();
+
     public Proxy getProxy();
     public boolean setProxy(Proxy proxy);
+
+    public String getJavaArguments();
+    public boolean setJavaArguments(String javaArguments);
+
+    public File getJava();
+    public String getJavaPath();
+    public boolean setJavaPath(String javaPath);
 }
 
 public class Config implements ConfigUser,ConfigSystem {
     private File mcDirectory;
+    private String mcLaunchSubdirectory = "/versions/ForgeLiteLoader 1.7.10";
     private File launcherConfig;
     private URI downloadRoot = URI.create("http://files.dmine.esy.es/");
     private URI authRoot = URI.create("http://minecraft.ely.by");
@@ -70,6 +81,8 @@ public class Config implements ConfigUser,ConfigSystem {
     private String accessToken;
     private UUID uuid;
     private String name;
+    private String javaArgument = "-Xmx2G -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -XX:-UseAdaptiveSizePolicy -Xmn128M";
+    private File java = new File("");
 
     public Config() {
         OS = OSValidator.getPlatform();
@@ -82,10 +95,14 @@ public class Config implements ConfigUser,ConfigSystem {
     public OSValidator.OS getOS() { return OS; }
 
     public File getMcDirectory() { return mcDirectory; }
+
+
+
     public File getLauncherConfig() { return launcherConfig; }
 
     public String getMcDirectoryPath() { return mcDirectory.getPath(); }
     public String getLauncherConfigPath() { return launcherConfig.getPath(); }
+    public String getMcLaunchSubdirectory() { return mcLaunchSubdirectory; }
 
     public URI getAuthURI() { return authRoot; }
     public URI getDownloadURI() { return downloadRoot; }
@@ -121,4 +138,10 @@ public class Config implements ConfigUser,ConfigSystem {
     public Proxy getProxy() { return proxy; }
     public boolean setProxy(Proxy proxy) { this.proxy = proxy; return true; }
 
+    public String getJavaArguments() { return javaArgument; }
+    public boolean setJavaArguments(String javaArgument) { this.javaArgument = javaArgument; return true; }
+
+    public File getJava() { return java; }
+    public String getJavaPath() { return java.getPath();}
+    public boolean setJavaPath(String javaPath) {this.java = new File(javaPath);return true;}
 }
