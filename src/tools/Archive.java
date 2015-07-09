@@ -21,10 +21,10 @@ public class Archive {
         if (!dstDir.exists()) {
             dstDir.mkdir();
         }
-        if (new File(zipFileName).exists()) {
+        if (new File(dstDir + "/" + zipFileName).exists()) {
             try {
                 final ZipInputStream zis = new ZipInputStream(
-                        new FileInputStream(zipFileName));
+                        new FileInputStream(dstDir + "/" + zipFileName));
                 ZipEntry ze = zis.getNextEntry();
                 String nextFileName;
                 while (ze != null) {

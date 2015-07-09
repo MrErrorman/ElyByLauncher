@@ -93,7 +93,7 @@ public class Config implements ConfigUser,ConfigSystem {
     private String signoutSubauth = "/auth/signout";
     private String invalidateSubauth = "/auth/invalidate";
     private Proxy proxy = Proxy.NO_PROXY;
-    private String[] downloadFiles = {"versions.json", "config.zip", "core.zip", "libraries.zip", "mods.zip", "tlauncher.zip"};
+    private String[] downloadFiles = {"versions.json", "config.zip", "core.zip", "libraries.zip", "mods.zip", "ElyByLauncher.zip"};
     private OSValidator.OS OS = OSValidator.OS.UNKNOWN;
     private String clientTocken = "jR2XknQCCCSkpagJ99xIGZiClzNqAn";
     private String username;

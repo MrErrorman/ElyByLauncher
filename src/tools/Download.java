@@ -49,7 +49,7 @@ public class Download {
                     return;
                 }
 
-                writeFile = new RandomAccessFile(file, "rw");
+                writeFile = new RandomAccessFile(OSValidator.getWorkingDirectory() + "/" + file, "rw");
                 writeFile.seek(downloaded);
                 stream = connection.getInputStream();
                 System.out.println("[Download] " + "Downloading: " + file);
@@ -73,15 +73,15 @@ public class Download {
 
                     res = (int) (100 - remainDownload * 100 / contentLength);
                     if (res == 25 && checkQuartet) {
-                        System.out.println("[Download] " + f + " " + res + "%");
+                        System.out.println("[Download] " + file + " " + res + "%");
                         checkQuartet = false;
                     }
                     if (res == 50 && checkHalf) {
-                        System.out.println("[Download] " + f + " " + res + "%");
+                        System.out.println("[Download] " + file + " " + res + "%");
                         checkHalf = false;
                     }
                     if (res == 100 && checkFinish) {
-                        System.out.println("[Download] " + f + " " + res + "%");
+                        System.out.println("[Download] " + file + " " + res + "%");
                         checkFinish = false;
                     }
                     if (read == -1) {
@@ -93,16 +93,15 @@ public class Download {
                 }
 
                 if (!file.contains("versions.json")) {
-                    outputMD5 = DigestUtils.md5Hex(createChecksum(file));
+                    outputMD5 = DigestUtils.md5Hex(createChecksum(OSValidator.getWorkingDirectory() + "/" + file));
                     if (!inputMD5.contains(outputMD5)) {
-                        System.out.println("[Download/Error] md5 sums" );
+                        System.out.println("[Download/Error] md5 sums");
                         downloadFile(url, file, inputMD5, count++);
                     } else {
                         System.out.println("[Download] " + "Downloaded: " + file);
                         Archive.unZip(file);
                     }
                 }
-
             } catch (Exception ee) {
                 System.out.println("[Exception]" + ee.getMessage());
             } finally {
