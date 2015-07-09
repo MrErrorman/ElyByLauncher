@@ -1,6 +1,5 @@
 *.class
 
-*.jar
 *.json
 *.zip
 ?est.*
@@ -10,4 +9,3 @@ hs_err_pid*
 /bin/
 /.idea/
 /out/
-src/Main.java
