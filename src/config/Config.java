@@ -54,19 +54,10 @@ public class Config {
     private File java = new File("");
     public ConfigReader cr;
     private int launchStateNum = 1;
-    public Property[] properties = {
-            new Property("launchState", launchStateNum),
-            new Property("username", username),
-            new Property("name", name),
-            new Property("accessToken", accessToken),
-            new Property("uuid", uuid),
-            new Property("javaPath", java),
-            new Property("javaArgument", javaArguments),
-            new Property("minecraftArguments", minecraftArguments),
-            new Property("mcVersion", mcVersion, false),
-            new Property("downloadFiles", downloadFiles, false),
-            new Property("clientTocken", clientTocken, false)
-    };
+    public Property[] properties;
+    private int gameWidth=854;
+    private int gameHeight=480;
+    private int RAM=1024; //"-Xmx512M"
 
     public Config() {
         OS = OSValidator.getPlatform();
@@ -255,17 +246,50 @@ public class Config {
         return true;
     }
 
+    public int getGameWidth() {
+        return gameWidth;
+    }
+
+    public boolean setGameWidth(int gameWidth) {
+        this.gameWidth = gameWidth;
+        return true;
+    }
+
+    public int getGameHeight() {
+        return gameHeight;
+    }
+
+    public boolean setGameHeight(int gameHeight) {
+        this.gameHeight = gameHeight;
+        return true;
+    }
+
+    public int getRAM() {
+        return RAM;
+    }
+
+    public boolean setRAM(int RAM) {
+        this.RAM = RAM;
+        return true;
+    }
+
     public void updateProperties() {
-        properties[0] = new Property("launchState", launchStateNum);
-        properties[1] = new Property("username", username);
-        properties[2] = new Property("name", name);
-        properties[3] = new Property("accessToken", accessToken);
-        properties[4] = new Property("uuid", uuid);
-        properties[5] = new Property("javaPath", java);
-        properties[6] = new Property("javaArgument", javaArguments);
-        properties[7] = new Property("minecraftArguments", minecraftArguments);
-        properties[8] = new Property("Version", mcVersion, false);
-        properties[9] = new Property("downloadFiles", downloadFiles, false);
-        properties[10] = new Property("clientTocken", clientTocken, false);
+        Property[] properties1 = {
+                new Property("launchState", launchStateNum),
+                new Property("username", username),
+                new Property("name", name),
+                new Property("accessToken", accessToken),
+                new Property("uuid", uuid),
+                new Property("javaPath", java),
+                new Property("javaArgument", javaArguments),
+                new Property("minecraftArguments", minecraftArguments),
+                new Property("mcVersion", mcVersion, false),
+                new Property("downloadFiles", downloadFiles, false),
+                new Property("clientTocken", clientTocken, false),
+                new Property("Window width", gameWidth),
+                new Property("Window height", gameHeight=480),
+                new Property("Game RAM", RAM)
+        };
+        properties = properties1;
     }
 }

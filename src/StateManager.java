@@ -154,8 +154,12 @@ public class StateManager {
                  * Command to launch minecraft
                  */
                 Account accl = new Account(config);
-                if ((config.getUsername() != "") && (accl.validate())) new Launcher(config);
-                return new State(2);
+                if ((config.getUsername() != "") && (accl.validate())) {
+                    new Launcher(config);
+                } else {
+                    System.out.println("Failed to auth \n Retry please \"l\\login\\u\\user [login] [password]\"");
+                }
+                return new State(1);
             default:
                 System.out.println("Invalid command");
                 return new State(1);
