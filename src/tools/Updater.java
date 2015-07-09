@@ -32,8 +32,8 @@ public class Updater {
             JSONParser parser = new JSONParser();
             String[] clientVersions;
             String[] serverVersions;
-            if (new File(path +"/versions.json").exists()) {
-                Object obj1 = parser.parse(new FileReader(path +"/versions.json"));
+            if (new File(path + "/versions.json").exists()) {
+                Object obj1 = parser.parse(new FileReader(path + "/versions.json"));
                 clientVersions = parser(obj1, files);
             } else {
                 clientVersions = new String[]{"", "", "", "", "", ""};
@@ -59,12 +59,17 @@ public class Updater {
             }
             if (check) {
                 Download.downloadFile(new URL(mainUrl + files[0]), files[0], serverVersions[0], 0);
-                Runtime.getRuntime().exec("cmd /c start " + path + "/remove_download.bat");
+                if (OSValidator.getPlatform() == OSValidator.OS.WINDOWS) {
+                    Runtime.getRuntime().exec("cmd /c start " + path + "/remove_download.bat");
+                }
             }
             if (checkClientUpdate) {
-                System.out.println("[Updater] " + "Start update client");
-                Runtime.getRuntime().exec("cmd /c start " + path + "/update_client.bat");
-                System.exit(0);
+                if (OSValidator.getPlatform() == OSValidator.OS.WINDOWS) {
+                    System.out.println("[Updater] " + "Start update client");
+                    Runtime.getRuntime().exec("cmd /c start " + path + "/update_client.bat");
+                    System.exit(0);
+                }
+
             }
         } else {
             System.out.println("[Updater/Error] " + "No connection on the server");
