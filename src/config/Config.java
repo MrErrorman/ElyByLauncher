@@ -108,7 +108,7 @@ public class Config {
     private String uuid;
     private String name;
 
-    private File java = new File("");
+    private File java = new File(System.getenv("JAVA_HOME"));
     private String javaArguments = "-Xmx2G -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -XX:-UseAdaptiveSizePolicy -Xmn128M";
     private String minecraftArguments = "";
 

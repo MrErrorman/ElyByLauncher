@@ -14,7 +14,6 @@ public class StateManager {
     private Config config;
 
     Scanner in = new Scanner(System.in);
-    //PrintWriter out = new PrintWriter(System.out);
 
     public class State {
         private int StateCode;
