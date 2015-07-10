@@ -11,11 +11,11 @@ import java.security.MessageDigest;
  * Created by John on 06.07.2015.
  */
 public class Main {
-    public static config.Config config = new Config();
 
     public static void main(String[] args) throws IOException, ParseException, InterruptedException, Exception {
         System.out.println("Starting a launcher");
-        config.cr = new ConfigReader(config);
+        config.Config config = new Config();
+
 
         /*
          * You must know that it is a infinity cycle
@@ -34,6 +34,7 @@ public class Main {
         }
         else {
             new StateManager(config, config.getLaunchStateNum());
+
         }
     }
 }

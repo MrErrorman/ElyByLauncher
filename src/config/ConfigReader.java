@@ -8,7 +8,9 @@ import org.json.simple.parser.ParseException;
 import javax.print.DocFlavor;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -19,44 +21,25 @@ import java.util.UUID;
 public class ConfigReader {
     JSONParser parser = new JSONParser();
 
-    public ConfigReader(Config config) throws IOException, ParseException, Exception {
-        String file = config.getLauncherConfigPath();
-        if (new File(file).exists()) {
-            JSONObject obj = new JSONObject();
-            try {
-                obj = (JSONObject) parser.parse(new FileReader(file));
-                for (config.Config.Property property : config.properties)
-                {
-                    try {
-                        if (property.value instanceof File) {
-                            property.value = new File(obj.get(property.name).toString());
-                            property.createOnStart = true;
-                        } else if (property.value instanceof String) {
-                            property.value = (String) obj.get(property.name);
-                            property.createOnStart = true;
-                        } else if (property.value instanceof String[]) {
-                            property.value = (String[]) obj.get(property.name);
-                            property.createOnStart = true;
-                        } else {
-                            property.value = obj.get(property.name);
-                            property.createOnStart = true;
-                        }
-                    } catch (Exception e) {
-                        if (!property.createOnStart) {
-                            System.out.println(e.toString());
-                        }
-                    }
+    public boolean fileConfigReader(File configFile, List<Config.Property> properties) throws Exception {
+
+        if (configFile.exists()) {
+            JSONObject obj = (JSONObject) parser.parse(new FileReader(configFile));
+            for (Config.Property property : properties) {
+                if (obj.containsKey(property.name)) {
+                    property.stringValue = (String) obj.get(property.name);
+                } else if (property.createOnStart) {
+                    System.out.println("[Config] Key " + property.name + " is missing");
+                    if (property.stringValue != null) System.out.println("\tUsing default value: " + property.stringValue);
                 }
-            } catch (Exception e) {
-                System.out.println(e.toString());
-                ConfigMaker cm = new ConfigMaker(config);
-                cm.saveConfig();
             }
+
+        } else {
+            System.out.println("[Config] Config file not found. Creating...");
+            saveConfig(configFile, properties);
         }
-        else {
-            ConfigMaker cm = new ConfigMaker(config);
-            cm.saveConfig();
-        }
+
+        return true;
     }
 
     public void responseReader(Config config, String response) throws IOException, ParseException {
@@ -66,7 +49,6 @@ public class ConfigReader {
         JSONObject selected = (JSONObject) obj2.get("selectedProfile");
         config.setUuid((String) selected.get("id"));
         config.setName((String) selected.get("name"));
-        //boolean legacy = (boolean) selected.get("legacy");
     }
 
     public boolean validateReader(String response) throws IOException, ParseException {
@@ -76,5 +58,29 @@ public class ConfigReader {
         else {
             return true;
         }
+    }
+
+    public void saveConfig(File configFile, List<Config.Property> properties) throws Exception {
+
+        FileWriter file = new FileWriter(configFile);
+        JSONObject configJson = new JSONObject();
+        JSONObject obj = new JSONObject();
+
+        for (Config.Property property : properties) {
+            if ((property.createOnStart) && (property.stringValue != null)) {
+                configJson.put(property.name,property.stringValue);
+            }
+        }
+
+        try {
+            file.write(configJson.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        } finally {
+            file.flush();
+            file.close();
+        }
+
     }
 }

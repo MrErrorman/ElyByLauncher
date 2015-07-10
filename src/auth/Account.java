@@ -40,7 +40,11 @@ public class Account {
             System.out.println(e.getMessage());
         }
 
-        config.cr.responseReader(config,answer);
+        try {
+            config.cr.responseReader(config,answer);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         return null;
     }
 

@@ -1,12 +1,10 @@
 import auth.Launcher;
 import config.Config;
 import auth.Account;
-import config.ConfigMaker;
 import org.json.simple.parser.ParseException;
 import tools.Updater;
 
 import java.io.IOException;
-import java.net.Authenticator;
 import java.util.Scanner;
 
 /**
@@ -105,8 +103,7 @@ public class StateManager {
                  * Command for quiting
                  */
                 System.out.println("Saving changes...");
-                ConfigMaker cm = new ConfigMaker(config);
-                cm.saveConfig();
+                config.saveProperties();
                 System.out.println("Exiting...");
                 return new State(0);
             case "login":
