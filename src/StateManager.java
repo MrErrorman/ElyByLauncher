@@ -68,14 +68,15 @@ public class StateManager {
                 case -1:
                     System.out.println("Test mode is on:");
                     new Test(config);
-                    command = "q --silent";
+                    command = "q --silent --saveoff";
+                    System.out.println("Test mode is off");
                     break;
                 case 1:
                     System.out.print("> ");
                     command = in.nextLine();
                     break;
                 case 2:
-
+                    command = "launch";
                     break;
                 default:
                     state.ChangeState(1);
@@ -101,7 +102,7 @@ public class StateManager {
                 /*
                  * Command for quiting
                  */
-                if ((args.length>0) && ((args[0].contains("-s")) || args[0].contains("--silent"))) {
+                if ((args.length>0) && ((args.toString().contains("-s")) || args[0].toString().contains("--silent"))) {
                     config.saveProperties();
                     return new State(0);
                 } else if (args.length == 0)  {

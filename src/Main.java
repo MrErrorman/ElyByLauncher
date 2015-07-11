@@ -28,13 +28,12 @@ public class Main {
         if ((args.length > 0) && ((args[0].toString().contains("test")) || (args[0].toString().contains("debug")))) {
             new StateManager(config, -1);
         }
-        if ((args.length > 0) && args[0].toString().contains("nogui")) {
+        else if ((args.length > 0) && args[0].toString().contains("nogui")) {
             System.out.println("We are always in nogui!");
             new StateManager(config, 1);
         }
         else {
             new StateManager(config, config.getLaunchStateNum());
-
         }
     }
 }
