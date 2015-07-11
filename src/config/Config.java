@@ -204,7 +204,7 @@ public class Config {
     }
     public File getLauncherConfig() {return launcherConfig;}
     public String getMcDirectoryPath() {
-        return mcDirectory.getPath();
+        return mcDirectory.getPath() + "/";
     }
     public String getLauncherConfigPath() {
         return launcherConfig.getPath();

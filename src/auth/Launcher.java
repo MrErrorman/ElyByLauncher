@@ -15,7 +15,7 @@ public class Launcher  {
     public Launcher(Config config) throws IOException {
 
         String launchStr = "java -Xmx2048M " +
-                "-Djava.library.path=\"" + config.getMcDirectoryPath() + "/versions/" + config.getMcVersion() + "/natives\" " +
+                "-Djava.library.path=\"" + config.getMcDirectoryPath() + "versions/" + config.getMcVersion() + "/natives\" " +
                 "-cp \"" +
                 config.getMcDirectoryPath() + "libraries/com/mumfrey/liteloader/1.7.10/liteloader-1.7.10.jar:" +
                 config.getMcDirectoryPath() + "libraries/net/minecraft/launchwrapper/1.11/launchwrapper-1.11.jar:" +
@@ -67,14 +67,21 @@ public class Launcher  {
                 config.getMcDirectoryPath() + "libraries/by/ely/authlib/1.5.21/authlib-1.5.21.jar:" +
                 config.getMcDirectoryPath() + "versions/" + config.getMcVersion() + "/" + config.getMcVersion() + ".jar" +
                 "\" " +
-                "-Dfml.ignoreInvalidMinecraftCertificates=true " + "-Dfml.ignorePatchDiscrepancies=true "+
-                "-XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -XX:-UseAdaptiveSizePolicy " +
-                "-Xmn128M net.minecraft.launchwrapper.Launch --tweakClass com.mumfrey.liteloader.launch.LiteLoaderTweaker " +
+                "-Dfml.ignoreInvalidMinecraftCertificates=true " +
+                "-Dfml.ignorePatchDiscrepancies=true "+
+                "-XX:+UseConcMarkSweepGC " +
+                "-XX:+CMSIncrementalMode " +
+                "-XX:-UseAdaptiveSizePolicy " +
+                "-Xmn128M " +
+                "net.minecraft.launchwrapper.Launch " +
+                "--tweakClass com.mumfrey.liteloader.launch.LiteLoaderTweaker " +
                 "--username " + config.getName() + " --version \"" + config.getMcVersion() + "\" --gameDir " + config.getMcDirectoryPath() +
                 " --assetsDir " + config.getMcDirectoryPath() +
                 "assets --assetIndex 1.7.10 --uuid " + config.getUuid() +
                 " --accessToken " + config.getAccessToken() + " " +
-                "--userProperties {} --userType mojang --tweakClass cpw.mods.fml.common.launcher.FMLTweaker " +
+                "--userProperties {} " +
+                "--userType mojang " +
+                "--tweakClass cpw.mods.fml.common.launcher.FMLTweaker " +
                 "--width " + config.getGameWidth() + " " +
                 "--height " + config.getGameHeight();
 
