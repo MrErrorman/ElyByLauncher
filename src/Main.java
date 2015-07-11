@@ -25,10 +25,10 @@ public class Main {
          * State = 1 - waiting for a command
          * We can add a new state in StateManager.java!
          */
-        if ( (args.length > 0) && ((args[0].toString() == "test") || (args[0].toString() == "debug"))) {
+        if ((args.length > 0) && ((args[0].toString().contains("test")) || (args[0].toString().contains("debug")))) {
             new StateManager(config, -1);
         }
-        if (args[0] == "nogui") {
+        if ((args.length > 0) && args[0].toString().contains("nogui")) {
             System.out.println("We are always in nogui!");
             new StateManager(config, 1);
         }

@@ -68,7 +68,7 @@ public class StateManager {
                 case -1:
                     System.out.println("Test mode is on:");
                     new Test(config);
-                    command = "q";
+                    command = "q --silent";
                     break;
                 case 1:
                     System.out.print("> ");
@@ -101,10 +101,18 @@ public class StateManager {
                 /*
                  * Command for quiting
                  */
-                System.out.println("Saving changes...");
-                config.saveProperties();
-                System.out.println("Exiting...");
-                return new State(0);
+                if ((args.length>0) && ((args[0].contains("-s")) || args[0].contains("--silent"))) {
+                    config.saveProperties();
+                    return new State(0);
+                } else if (args.length == 0)  {
+                    System.out.println("Saving changes...");
+                    config.saveProperties();
+                    System.out.println("Exiting...");
+                    return new State(0);
+                } else {
+                    System.out.println("Invalid parameters");
+                    return new State(1);
+                }
             case "login":
             case "l":
             case "user":
