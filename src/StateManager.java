@@ -78,6 +78,9 @@ public class StateManager {
                 case 2:
                     command = "launch";
                     break;
+                case 3:
+                    command = "update";
+                    break;
                 default:
                     state.ChangeState(1);
             }
@@ -97,6 +100,15 @@ public class StateManager {
             throws IOException, ParseException, InterruptedException, Exception {
         switch (command)
         {
+            case "h":
+            case "help":
+                System.out.println("It is nogui minecraft launcher\nAvaliable commands are:\n" +
+                        "help, h                     Returns this help\n" +
+                        "quit, q                     Close this launcher\n" +
+                        "login, user, l, u           Log in with ely.by\n" +
+                        "download, update, upd, d    Download minecraft\n" +
+                        "launch, run, r              Launch minecraft");
+                return new State(1);
             case "q":
             case "quit":
                 /*
@@ -140,7 +152,7 @@ public class StateManager {
             case "d":
             case "download":
             case "upd":
-            case "updates":
+            case "update":
                 /*
                  * Command for downloading updates
                  * TODO: download minecraft without version checking with "-f" argument

@@ -3,6 +3,7 @@ import config.ConfigReader;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
+import tools.OSValidator;
 
 import java.io.*;
 import java.security.MessageDigest;
@@ -16,7 +17,6 @@ public class Main {
         System.out.println("Starting a launcher");
         config.Config config = new Config();
 
-
         /*
          * You must know that it is a infinity cycle
          * If you want to launch tems mode (test.java) use StateCode = -1 or "test" ("debug") launch argument
@@ -25,7 +25,11 @@ public class Main {
          * State = 1 - waiting for a command
          * We can add a new state in StateManager.java!
          */
-        if ((args.length > 0) && ((args[0].toString().contains("test")) || (args[0].toString().contains("debug")))) {
+
+        if (!(new File(config.getMcDirectoryPath() + "versions.json").exists())) {
+            new StateManager(config, 3);
+        }
+        else if ((args.length > 0) && ((args[0].toString().contains("test")) || (args[0].toString().contains("debug")))) {
             new StateManager(config, -1);
         }
         else if ((args.length > 0) && args[0].toString().contains("nogui")) {

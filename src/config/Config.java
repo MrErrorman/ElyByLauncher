@@ -108,7 +108,7 @@ public class Config {
     private String uuid;
     private String name;
 
-    private File java = new File(System.getenv("JAVA_HOME"));
+    private File java = new File("");
     private String javaArguments = "-Xmx2G -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -XX:-UseAdaptiveSizePolicy -Xmn128M";
     private String minecraftArguments = "";
 
@@ -146,7 +146,7 @@ public class Config {
 
         //Launch settings
         properties.add(new Property("Java path",java.getPath(),Type.FILE, false));
-        properties.add(new Property("Java arguments",javaArguments, Type.STRING));
+        properties.add(new Property("Java arguments",javaArguments, Type.STRING, false));
         properties.add(new Property("Minecraft arguments",minecraftArguments, Type.STRING,false));
         properties.add(new Property("Minecraft version",mcVersion, Type.STRING, false));
         properties.add(new Property("Window width",String.valueOf(gameWidth), Type.INTEGER));
