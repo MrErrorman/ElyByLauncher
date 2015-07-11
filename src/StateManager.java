@@ -176,7 +176,7 @@ public class StateManager {
                 } else {
                     System.out.println("Failed to auth \n Retry please \"l\\login\\u\\user [login] [password]\"");
                 }
-                return new State(1);
+                return new State(0);
             default:
                 System.out.println("Invalid command");
                 return new State(1);

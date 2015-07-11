@@ -108,7 +108,7 @@ public class Config {
     private String uuid;
     private String name;
 
-    private File java = new File("");
+    private File java = new File("java");
     private String javaArguments = "-Xmx2G -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode -XX:-UseAdaptiveSizePolicy -Xmn128M";
     private String minecraftArguments = "";
 
@@ -204,7 +204,12 @@ public class Config {
     }
     public File getLauncherConfig() {return launcherConfig;}
     public String getMcDirectoryPath() {
-        return mcDirectory.getPath() + "/";
+        char slash = '/';
+        if (getOS() == OSValidator.OS.LINUX) {
+            slash = '/';
+        } else { slash = '\\';}
+        return mcDirectory.getPath() + slash;
+
     }
     public String getLauncherConfigPath() {
         return launcherConfig.getPath();
