@@ -2,8 +2,11 @@
 Minecraft launcher for Ely.by
 
 Usage
-Starting from command line: "java -jar ElyByLauncher.jar [Argument]"
-Avaliable arguments: "test", "debug", "nogui"
+Starting from command line: "java -jar ElyByLauncher.jar [Argument]" \n
+
+Avaliable arguments: "test", "debug", "nogui" \n\n
+
+
 
 Commands:
 help, h                     Returns help
